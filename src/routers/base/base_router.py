@@ -1,6 +1,10 @@
+# Third Party
 from fastapi import FastAPI
+
+# Standard
 from typing_extensions import NoReturn
 
+# Local
 from src.routers.stock_market.stock_market_router import StockMarketRouter
 
 
@@ -18,4 +22,3 @@ class BaseRouter:
         cls.__register_stock_market_routers()
 
         return cls.__app
-
