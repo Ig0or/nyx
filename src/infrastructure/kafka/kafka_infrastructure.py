@@ -14,9 +14,9 @@ class KafkaInfrastructure:
         if cls.__producer is None:
             producer_config = {
                 "bootstrap_servers": config("KAFKA_URL"),
-                "client_id": config("CLIENT_ID"),
+                "client_id": config("KAFKA_CLIENT_ID"),
                 "key_serializer": ObfuscateDataService.obfuscate_value,
-                "value_serializer": ObfuscateDataService.obfuscate_value
+                "value_serializer": ObfuscateDataService.obfuscate_value,
             }
 
             cls.__producer = KafkaProducer(**producer_config)
