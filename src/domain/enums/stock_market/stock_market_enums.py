@@ -1,5 +1,13 @@
-from enum import StrEnum
+# Local
+from enum import Enum
 
-class OrdersTypeEnum(StrEnum):
+
+class OrdersTypeEnum(str, Enum):
     BUY = "BUY"
     SELL = "SELL"
+
+
+class OrderStatusEnum(str, Enum):
+    PENDING = "PENDING"
+    FINISHED = "FINISHED"
+    CANCELLED = "CANCELLED"
