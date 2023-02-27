@@ -1,30 +1,34 @@
-from decouple import config
+# Third Party
+from uuid import uuid4
 
-from src.domain.validators.stock_market.stock_market_validators import StockOrderValidator
-from src.infrastructure.kafka.kafka_infrastructure import KafkaInfrastructure
+# Local
+from src.domain.enums.stock_market.stock_market_enums import OrderStatusEnum
+from src.domain.models.stock_market.order_model import OrderModel
+from src.domain.validators.stock_market.stock_market_validators import (
+    StockOrderValidator,
+)
+from src.repositories.stock_market.stock_market_repository import StockMarketRepository
 
 
 class StockMarketService:
-    __kafka_infrastructure = KafkaInfrastructure
+    @staticmethod
+    def __create_order_model(order_input: StockOrderValidator) -> OrderModel:
+        order_model: OrderModel = {
+            "symbol": order_input.symbol,
+            "quantity": order_input.quantity,
+            "price": order_input.price,
+            "order_type": order_input.order_type,
+            "order_status": OrderStatusEnum.PENDING,
+            "order_id": str(uuid4()),
+        }
+
+        return order_model
 
     @classmethod
-    async def __send_oder_to_topic(cls, order_input: dict):
-        kafka_producer = await cls.__kafka_infrastructure.get_producer()
+    async def send_order(cls, order_input: StockOrderValidator) -> OrderModel:
+        order_model = cls.__create_order_model(order_input=order_input)
 
-        topic_name = config("TOPIC_NAME")
+        await StockMarketRepository.create_order_on_database(order_model=order_model)
+        await StockMarketRepository.send_order_to_kafka_topic(order_model=order_model)
 
-        kafka_producer.send(topic=topic_name, key=order_input.get("symbol"), value=order_input)
-
-
-
-
-    @classmethod
-    async def send_order(cls, order_input: StockOrderValidator):
-        order_input_dict = order_input.dict()
-
-
-
-
-
-
-
+        return order_model

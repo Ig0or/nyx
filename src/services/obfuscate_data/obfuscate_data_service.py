@@ -25,10 +25,7 @@ class ObfuscateDataService:
 
     @classmethod
     def __get_encode_method_from_value_type(cls, value: dict | str) -> Callable:
-        encode_methods = {
-            str: cls.__encode_str,
-            dict: cls.__encode_dict
-        }
+        encode_methods = {str: cls.__encode_str, dict: cls.__encode_dict}
 
         value_type = type(value)
         encode_method = encode_methods[value_type]
@@ -41,7 +38,6 @@ class ObfuscateDataService:
         encoded_value = encode_method(value=value)
 
         return encoded_value
-
 
     @classmethod
     def obfuscate_value(cls, value: dict | str) -> bytes:
