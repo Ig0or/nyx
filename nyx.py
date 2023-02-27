@@ -1,5 +1,7 @@
+# Third Party
 import uvicorn
 
+# Local
 from src.routers.base.base_router import BaseRouter
 
 app = BaseRouter.register_routers()
