@@ -27,3 +27,12 @@ class StockMarketRepository:
         producer.flush()
 
         return
+
+    @staticmethod
+    async def get_all_orders() -> list[OrderModel]:
+        connection = MongoDBInfrastructure.get_connection()
+
+        orders = connection.find()
+        orders_list = list(orders)
+
+        return orders_list
