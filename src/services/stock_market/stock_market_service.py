@@ -2,15 +2,15 @@
 from src.domain.extensions.stock_market.order_extension import OrderExtension
 from src.domain.models.stock_market.order_model import OrderModel
 from src.domain.models.stock_market.simplified_order_model import SimplifiedOrderModel
-from src.domain.validators.stock_market.stock_market_validators import (
-    StockOrderValidator,
+from src.domain.validators.stock_market.order_validator import (
+    OrderValidator,
 )
 from src.repositories.stock_market.stock_market_repository import StockMarketRepository
 
 
 class StockMarketService:
     @staticmethod
-    async def send_order(order_input: StockOrderValidator) -> OrderModel:
+    async def send_order(order_input: OrderValidator) -> OrderModel:
         order_model = OrderExtension.create_new_order_model(order_input=order_input)
 
         await StockMarketRepository.create_order_on_database(order_model=order_model)

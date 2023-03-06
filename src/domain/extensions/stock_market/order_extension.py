@@ -7,19 +7,17 @@ from src.domain.enums.stock_market.stock_market_enums import (
 )
 from src.domain.models.stock_market.order_model import OrderModel
 from src.domain.models.stock_market.simplified_order_model import SimplifiedOrderModel
-from src.domain.validators.stock_market.stock_market_validators import (
-    StockOrderValidator,
+from src.domain.validators.stock_market.order_validator import (
+    OrderValidator,
 )
 
 
 class OrderExtension:
     @staticmethod
-    def create_new_order_model(order_input: StockOrderValidator) -> OrderModel:
+    def create_new_order_model(order_input: OrderValidator) -> OrderModel:
         order_model: OrderModel = {
             "symbol": order_input.symbol,
             "quantity": order_input.quantity,
-            "price": order_input.price,
-            "order_type": order_input.order_type,
             "order_status": OrderStatusEnum.PENDING,
             "order_id": str(uuid4()),
         }
