@@ -1,12 +1,12 @@
 # Third Party
 from uuid import uuid4
 
+from src.domain.dtos.stock_market.resumed_order_dto import ResumedOrderDto
 # Local
 from src.domain.enums.stock_market.stock_market_enums import (
     OrderStatusEnum,
 )
 from src.domain.models.stock_market.order_model import OrderModel
-from src.domain.models.stock_market.simplified_order_model import SimplifiedOrderModel
 from src.domain.validators.stock_market.order_validator import (
     OrderValidator,
 )
@@ -25,14 +25,15 @@ class OrderExtension:
         return order_model
 
     @staticmethod
-    def __to_simplified_order_model(order: dict) -> SimplifiedOrderModel:
-        simplified_order_model: SimplifiedOrderModel = {
-            "symbol": order.get("symbol", ""),
-            "order_status": order.get("order_status", OrderStatusEnum.CANCELLED),
-            "order_id": order.get("order_id", ""),
+    def to_resumed_order_dto(order_model: OrderModel) -> ResumedOrderDto:
+        resumed_order_dto: ResumedOrderDto = {
+            "symbol": order_model["symbol"],
+            "quantity": order_model["quantity"],
+            "order_status": order_model["order_status"],
+            "order_id": order_model["order_id"],
         }
 
-        return simplified_order_model
+        return resumed_order_dto
 
     @staticmethod
     def to_array_simplified_order_model(
@@ -41,7 +42,7 @@ class OrderExtension:
         simplified_orders_model = list()
 
         for order in orders:
-            simplified_order_model = OrderExtension.__to_simplified_order_model(
+            simplified_order_model = OrderExtension.to_simplified_order_model(
                 order=order
             )
             simplified_orders_model.append(simplified_order_model)
