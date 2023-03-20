@@ -11,21 +11,21 @@ from src.domain.validators.stock_market.order_validator import (
 
 
 class StockMarketRouter:
-    __stock_market_router = APIRouter()
+    __stock_market_router = APIRouter(prefix="/stock_market", tags=["StockMarket"])
 
     @classmethod
     def get_routers(cls) -> APIRouter:
         return cls.__stock_market_router
 
     @staticmethod
-    @__stock_market_router.post("/stock_market/send_order")
-    async def send_order(order_input: OrderValidator) -> OrderModel:
+    @__stock_market_router.post("/send_order")
+    async def send_order(order_input: OrderValidator) -> SimplifiedOrderModel:
         response = await StockMarketController.send_order(order_input=order_input)
 
         return response
 
     @staticmethod
-    @__stock_market_router.get("/stock_market/list_orders")
+    @__stock_market_router.get("/list_orders")
     async def list_orders() -> list[SimplifiedOrderModel]:
         response = await StockMarketController.list_orders()
 

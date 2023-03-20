@@ -10,13 +10,15 @@ from src.repositories.stock_market.stock_market_repository import StockMarketRep
 
 class StockMarketService:
     @staticmethod
-    async def send_order(order_input: OrderValidator) -> OrderModel:
+    async def send_order(order_input: OrderValidator) -> SimplifiedOrderModel:
         order_model = OrderExtension.create_new_order_model(order_input=order_input)
 
         await StockMarketRepository.create_order_on_database(order_model=order_model)
         await StockMarketRepository.send_order_to_kafka_topic(order_model=order_model)
 
-        return order_model
+        simplified_order_model = OrderExtension.to_simplified_order_model(order=order_model)
+
+        return simplified_order_model
 
     @classmethod
     async def list_orders(cls) -> list[SimplifiedOrderModel]:
