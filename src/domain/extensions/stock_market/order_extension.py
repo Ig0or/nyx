@@ -2,6 +2,7 @@
 from uuid import uuid4
 
 from src.domain.dtos.stock_market.resumed_order_dto import ResumedOrderDto
+
 # Local
 from src.domain.enums.stock_market.stock_market_enums import (
     OrderStatusEnum,
@@ -38,7 +39,7 @@ class OrderExtension:
     @staticmethod
     def to_array_simplified_order_model(
         orders: list[dict],
-    ) -> list[SimplifiedOrderModel]:
+    ):
         simplified_orders_model = list()
 
         for order in orders:
