@@ -3,7 +3,10 @@ from fastapi import APIRouter, Response
 
 # Local
 from src.controllers.stock_market.stock_market_controller import StockMarketController
-from src.domain.dtos.stock_market.resumed_order_dto import ResumedOrderResponseDto
+from src.domain.dtos.stock_market.resumed_order_dto import (
+    ResumedOrderResponseDto,
+    ListResumedOrderResponseDto,
+)
 from src.domain.validators.stock_market.order_validator import (
     OrderValidator,
 )
@@ -27,8 +30,12 @@ class StockMarketRouter:
         return response
 
     @staticmethod
-    @__stock_market_router.get("/list_orders")
-    async def list_orders():
-        response = await StockMarketController.list_orders()
+    @__stock_market_router.get(
+        "/list_orders", response_model=ListResumedOrderResponseDto
+    )
+    async def list_orders() -> Response:
+        response = await StockMarketEntryPoint.process_request(
+            callback=StockMarketController.list_orders
+        )
 
         return response

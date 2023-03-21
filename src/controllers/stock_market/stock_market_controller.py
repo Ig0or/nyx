@@ -3,6 +3,7 @@ from http import HTTPStatus
 
 from src.domain.dtos.stock_market.resumed_order_dto import (
     ResumedOrderResponseDto,
+    ListResumedOrderResponseDto,
 )
 from src.domain.validators.stock_market.order_validator import (
     OrderValidator,
@@ -25,7 +26,13 @@ class StockMarketController:
         return response
 
     @staticmethod
-    async def list_orders():
-        response = await StockMarketService.list_orders()
+    async def list_orders() -> ListResumedOrderResponseDto:
+        result = await StockMarketService.list_orders()
+
+        response: ListResumedOrderResponseDto = {
+            "result": result,
+            "success": True,
+            "status_code": HTTPStatus.OK,
+        }
 
         return response
