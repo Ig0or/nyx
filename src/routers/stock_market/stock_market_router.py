@@ -39,3 +39,6 @@ class StockMarketRouter:
         )
 
         return response
+
+    @staticmethod
+

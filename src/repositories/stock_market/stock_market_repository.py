@@ -29,10 +29,18 @@ class StockMarketRepository:
         return
 
     @staticmethod
-    async def get_all_orders() -> list[OrderModel]:
+    async def get_all_orders() -> list[dict]:
         connection = MongoDBInfrastructure.get_connection()
 
-        orders = connection.find()
+        orders = connection.find({}, {"_id": 0})
         orders_list = list(orders)
 
         return orders_list
+
+    @staticmethod
+    async def get_order_by_id(order_id: str) -> dict:
+        connection = MongoDBInfrastructure.get_connection()
+
+        order = connection.find_one({"order_id": order_id}, {"_id": 0})
+
+        return order

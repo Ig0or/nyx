@@ -1,6 +1,7 @@
 # Local
 from http import HTTPStatus
 
+from src.domain.dtos.stock_market.detailed_order_dto import DetailedOrderResponseDto
 from src.domain.dtos.stock_market.resumed_order_dto import (
     ResumedOrderResponseDto,
     ListResumedOrderResponseDto,
@@ -30,6 +31,18 @@ class StockMarketController:
         result = await StockMarketService.list_orders()
 
         response: ListResumedOrderResponseDto = {
+            "result": result,
+            "success": True,
+            "status_code": HTTPStatus.OK,
+        }
+
+        return response
+
+    @staticmethod
+    async def detail_order(order_id) -> DetailedOrderResponseDto:
+        result = await StockMarketService.detail_order(order_id=order_id)
+
+        response: DetailedOrderResponseDto = {
             "result": result,
             "success": True,
             "status_code": HTTPStatus.OK,
