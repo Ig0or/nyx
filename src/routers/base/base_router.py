@@ -9,7 +9,7 @@ from src.routers.stock_market.stock_market_router import StockMarketRouter
 
 
 class BaseRouter:
-    __app = FastAPI()
+    __app = FastAPI(title="Stock Market Web Application")
 
     @classmethod
     def __register_stock_market_routers(cls) -> NoReturn:
