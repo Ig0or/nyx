@@ -9,7 +9,7 @@ from src.routers.stock_market.stock_market_router import StockMarketRouter
 
 
 class BaseRouter:
-    __app = FastAPI(title="Stock Market Web Application")
+    __app = FastAPI(title="Nyx")
 
     @classmethod
     def __register_stock_market_routers(cls) -> NoReturn:
