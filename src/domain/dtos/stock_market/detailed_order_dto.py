@@ -5,22 +5,17 @@ from typing_extensions import NotRequired, TypedDict
 from src.domain.enums.stock_market.stock_market_enum import OrderStatusEnum
 
 
-class ResumedOrderDto(TypedDict):
+class DetailedOrderDto(TypedDict):
     symbol: str
     quantity: int
+    unit_price: NotRequired[float]
     order_status: OrderStatusEnum
+    order_message: NotRequired[str]
     order_id: str
 
 
-class ResumedOrderResponseDto(TypedDict):
-    result: ResumedOrderDto
-    message: NotRequired[str]
-    success: bool
-    status_code: int
-
-
-class ListResumedOrderResponseDto(TypedDict):
-    result: list[ResumedOrderDto]
+class DetailedOrderResponseDto(TypedDict):
+    result: DetailedOrderDto
     message: NotRequired[str]
     success: bool
     status_code: int
