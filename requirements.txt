@@ -1,6 +1,7 @@
 cryptography==39.0.1
 fastapi==0.92.0
 kafka-python==2.0.2
+loglifos==0.1.0
 pymongo==4.3.3
 python-decouple==3.7
 uuid==1.30
