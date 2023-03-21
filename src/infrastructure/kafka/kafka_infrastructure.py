@@ -13,7 +13,7 @@ class KafkaInfrastructure:
     def get_producer(cls) -> KafkaProducer:
         if cls.__producer is None:
             producer_config = {
-                "bootstrap_servers": config("KAFKA_URL"),
+                "bootstrap_servers": config("KAFKA_URI"),
                 "client_id": config("KAFKA_CLIENT_ID"),
                 "key_serializer": ObfuscateDataService.obfuscate_value,
                 "value_serializer": ObfuscateDataService.obfuscate_value,
