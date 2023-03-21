@@ -1,0 +1,4 @@
+
+
+class OrderNotExists(Exception):
+    pass
