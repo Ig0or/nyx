@@ -9,6 +9,7 @@ class DetailedOrderDto(TypedDict):
     symbol: str
     quantity: int
     unit_price: NotRequired[float]
+    total_price: NotRequired[float]
     order_status: OrderStatusEnum
     order_message: NotRequired[str]
     order_id: str
