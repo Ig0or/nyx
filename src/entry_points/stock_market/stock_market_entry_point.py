@@ -9,6 +9,7 @@ import loglifos
 # Local
 from src.domain.dtos.abstract_response.abstract_response_dto import AbstractResponseDto
 from src.domain.dtos.response.response_dto import ResponseDto
+from src.domain.exceptions.stock_market.stock_market_exceptions import OrderNotExists
 
 
 class StockMarketEntryPoint:
@@ -32,6 +33,13 @@ class StockMarketEntryPoint:
                 status_code=response.get("status_code"),
                 message=response.get("message"),
                 result=response.get("result"),
+            )
+
+        except OrderNotExists:
+            response_dto = ResponseDto(
+                success=False,
+                status_code=HTTPStatus.OK,
+                message="This order id doesn't exist.",
             )
 
         except Exception as exception:
