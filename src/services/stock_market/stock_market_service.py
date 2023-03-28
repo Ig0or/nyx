@@ -43,11 +43,8 @@ class StockMarketService:
             raise OrderNotExists()
 
         order_model = OrderExtension.to_order_model(order=order)
-        detailed_order_dto = OrderExtension.to_order_dto(dto_type=DtoTypeEnum.DETAILED, order_model=order_model )
+        detailed_order_dto = OrderExtension.to_order_dto(
+            dto_type=DtoTypeEnum.DETAILED, order_model=order_model
+        )
 
         return detailed_order_dto
-
-
-
-
-

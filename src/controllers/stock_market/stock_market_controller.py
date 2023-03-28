@@ -1,10 +1,11 @@
-# Local
+# Standard
 from http import HTTPStatus
 
+# Local
 from src.domain.dtos.stock_market.detailed_order_dto import DetailedOrderResponseDto
 from src.domain.dtos.stock_market.resumed_order_dto import (
-    ResumedOrderResponseDto,
     ListResumedOrderResponseDto,
+    ResumedOrderResponseDto,
 )
 from src.domain.validators.stock_market.order_validator import (
     OrderValidator,
@@ -39,7 +40,7 @@ class StockMarketController:
         return response
 
     @staticmethod
-    async def detail_order(order_id) -> DetailedOrderResponseDto:
+    async def detail_order(order_id: str) -> DetailedOrderResponseDto:
         result = await StockMarketService.detail_order(order_id=order_id)
 
         response: DetailedOrderResponseDto = {
