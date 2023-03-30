@@ -3,7 +3,7 @@
 ### SOBRE O PROJETO :file_folder:
 Microsserviço em Python utilizando FastAPI e mensageria com Kafka com o objetivo de praticar processos assíncronos envolvendo filas.
 
-A Nyx é um API que envia ordens para um tópico do Kafka que serão consumidas e tratadas pelo Erebus (https://github.com/Ig0or/erebus)
+A Nyx é um API que envia ordens para um tópico do Kafka que serão consumidas e tratadas pelo Erebus (https://github.com/Ig0or/erebus).
 
 <hr>
 
@@ -27,7 +27,7 @@ A Nyx é um API que envia ordens para um tópico do Kafka que serão consumidas 
 
 :small_blue_diamond: Python-decouple: Utilizar variaveis de ambiente.
 
-:small_blue_diamond: Uuid: Gerar unique id
+:small_blue_diamond: Uuid: Gerar unique id.
 
 <hr>
 
@@ -49,7 +49,7 @@ A Nyx é um API que envia ordens para um tópico do Kafka que serão consumidas 
 #### POST
 
 ```
-{host}:{port}/stock_market/send_order - Envia uma nova ordem de acordo com o body enviado - {"symbol": string, "quantity": integer}
+{host}:{port}/stock_market/send_order - Envia uma nova ordem de acordo com o body enviado - {"symbol": string, "quantity": integer}.
 ```
 
 <hr>
@@ -60,7 +60,7 @@ A Nyx é um API que envia ordens para um tópico do Kafka que serão consumidas 
 - Acesse ```localhost:8080/docs```
 
 
-### PARA EXECUTAR O SERVIDOR SEM O DOCKER:calling:
+### PARA EXECUTAR O SERVIDOR SEM O DOCKER :calling:
 - Crie um novo ambiente virtual com ```python3 -m virtualenv .venv``` ou ```python3 -m venv .venv```
 - Ative o seu novo ambiente virtual com ```source ./venv/bin/activate``` ou ```.venv\Scripts\activate.bat```
 - Instale as dependências do projeto com ```pip install -r requirements.txt```
