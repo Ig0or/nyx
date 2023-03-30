@@ -63,7 +63,7 @@ A Nyx é um API que envia ordens para um tópico do Kafka que serão consumidas 
 ### PARA EXECUTAR O SERVIDOR SEM O DOCKER:calling:
 - Crie um novo ambiente virtual com ```python3 -m virtualenv .venv``` ou ```python3 -m venv .venv```
 - Ative o seu novo ambiente virtual com ```source ./venv/bin/activate``` ou ```.venv\Scripts\activate.bat```
-- Instale as dependências do projeto com ```pip install -r requirements.txt``
+- Instale as dependências do projeto com ```pip install -r requirements.txt```
 
 - Crie um arquivo ```.env``` na raiz do projeto de acordo com o ```.env_exemple```
 
