@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+ zookeeper:
+  image: 'bitnami/zookeeper:latest'
+  restart: on-failure
+  ports:
+   - "2181:2811"
+  environment:
+   - ALLOW_ANONYMOUS_LOGIN=yes
+  networks:
+   - backend
+
+ kafka:
+  image: 'bitnami/kafka:latest'
+  restart: on-failure
+  ports:
+   - "9092:9092"
+  environment:
+   - KAFKA_BROKER_ID=1
+   - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
+   - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+   - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+   - ALLOW_PLAINTEXT_LISTENER=YES
+  depends_on:
+   - zookeeper
+  networks:
+   - backend
+
+ mongodb:
+  image: "mongo:latest"
+  restart: on-failure
+  networks:
+   - backend
+
+ nyx_producer:
+  image: "nyx_producer"
+  build:
+   context: "https://github.com/Ig0or/nyx.git#main"
+   dockerfile: Dockerfile
+  ports:
+   - "8080:8080"
+  depends_on:
+   - zookeeper
+   - kafka
+   - mongodb
+  environment:
+   - SERVER_PORT=8080
+   - KAFKA_URI=kafka
+   - KAFKA_CLIENT_ID=nyxMicroService
+   - KAFKA_TOPIC_NAME=stockMarketOrders
+   - MONGO_HOST=mongodb
+   - MONGO_DATABASE=stock_market
+   - MONGO_COLLECTION=orders
+   - FERNET_KEY=2etNu_lojht_1nL0eILXABv_U_gi__fjqtupIrBEPUk=
+  networks:
+   - backend
+
+
+networks:
+ backend:
