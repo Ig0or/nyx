@@ -3,12 +3,14 @@ version: '3.8'
 services:
  mongodb:
   image: "mongo:latest"
+  container_name: "mongodb"
   restart: on-failure
   networks:
    - backend
 
  zookeeper:
   image: 'bitnami/zookeeper:latest'
+  container_name: "zookeeper"
   restart: on-failure
   ports:
    - "2181:2811"
@@ -19,6 +21,7 @@ services:
 
  kafka:
   image: 'bitnami/kafka:latest'
+  container_name: "kafka"
   restart: on-failure
   ports:
    - "9092:9092"
@@ -43,6 +46,7 @@ services:
   build:
    context: "https://github.com/Ig0or/nyx.git#main"
    dockerfile: Dockerfile
+  container_name: "nyx_producer"
   ports:
    - "8080:8080"
   depends_on:
@@ -67,6 +71,7 @@ services:
   build:
    context: "https://github.com/Ig0or/erebus.git#main"
    dockerfile: Dockerfile
+  container_name: "erebus_consumer"
   depends_on:
    mongodb:
     condition: service_started
