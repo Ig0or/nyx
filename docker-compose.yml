@@ -62,5 +62,29 @@ services:
   networks:
    - backend
 
+ erebus_consumer:
+  image: "erebus_consumer"
+  build:
+   context: "https://github.com/Ig0or/erebus.git#main"
+   dockerfile: Dockerfile
+  depends_on:
+   mongodb:
+    condition: service_started
+   kafka:
+    condition: service_healthy
+  environment:
+   - KAFKA_URI=kafka
+   - KAFKA_CLIENT_ID=erebusConsumer
+   - KAFKA_GROUP_ID=erebusConsumer
+   - KAFKA_TOPIC_NAME=stockMarketOrders
+   - MONGO_HOST=mongodb
+   - MONGO_DATABASE=stock_market
+   - MONGO_COLLECTION=orders
+   - FERNET_KEY=2etNu_lojht_1nL0eILXABv_U_gi__fjqtupIrBEPUk=
+   - ALPHAVANTAGE_URL=https://www.alphavantage.co/query
+   - ALPHAVANTAGE_API_KEY=XU2U9XU7T70FXDAZ
+  networks:
+   - backend
+
 networks:
  backend:
