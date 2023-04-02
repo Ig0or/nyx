@@ -1,6 +1,12 @@
 version: '3.8'
 
 services:
+ mongodb:
+  image: "mongo:latest"
+  restart: on-failure
+  networks:
+   - backend
+
  zookeeper:
   image: 'bitnami/zookeeper:latest'
   restart: on-failure
@@ -24,12 +30,11 @@ services:
    - ALLOW_PLAINTEXT_LISTENER=YES
   depends_on:
    - zookeeper
-  networks:
-   - backend
-
- mongodb:
-  image: "mongo:latest"
-  restart: on-failure
+  healthcheck:
+   test: ["CMD", "kafka-topics.sh", "--bootstrap-server", "kafka:9092", "--list"]
+   interval: 5s
+   timeout: 10s
+   retries: 5
   networks:
    - backend
 
@@ -41,13 +46,14 @@ services:
   ports:
    - "8080:8080"
   depends_on:
-   - zookeeper
-   - kafka
-   - mongodb
+   mongodb:
+    condition: service_started
+   kafka:
+    condition: service_healthy
   environment:
    - SERVER_PORT=8080
    - KAFKA_URI=kafka
-   - KAFKA_CLIENT_ID=nyxMicroService
+   - KAFKA_CLIENT_ID=nyxProducer
    - KAFKA_TOPIC_NAME=stockMarketOrders
    - MONGO_HOST=mongodb
    - MONGO_DATABASE=stock_market
@@ -55,7 +61,6 @@ services:
    - FERNET_KEY=2etNu_lojht_1nL0eILXABv_U_gi__fjqtupIrBEPUk=
   networks:
    - backend
-
 
 networks:
  backend:
